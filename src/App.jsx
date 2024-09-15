@@ -10,8 +10,9 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
-import MailIcon from '@mui/icons-material/Mail';
+import PhotoAlbumIcon from '@mui/icons-material/PhotoAlbum';
+import FolderIcon from '@mui/icons-material/Folder';
+import FavoriteIcon from '@mui/icons-material/Favorite'
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
@@ -122,7 +123,7 @@ export default function FotoSoppi() {
             <ListItem key={text} disablePadding>
               <ListItemButton sx={{ ":hover": { bgcolor: "#303030" } }}>
                 <ListItemIcon sx={{ color: "#E0E0E0" }}>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                  {index === 0 ? <PhotoAlbumIcon/> : index === 1 ? <FolderIcon/> : <FavoriteIcon/>}
                 </ListItemIcon>
                 <ListItemText primary={text} />
               </ListItemButton>
