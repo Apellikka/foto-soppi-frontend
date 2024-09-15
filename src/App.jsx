@@ -16,8 +16,6 @@ import FavoriteIcon from '@mui/icons-material/Favorite'
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import ImageList from '@mui/material/ImageList';
-import ImageListItem from '@mui/material/ImageListItem';
 import "./App.css"
 import { Grid2 } from '@mui/material';
 
