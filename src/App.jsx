@@ -1,7 +1,7 @@
 import * as React from 'react';
+import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
-import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import List from '@mui/material/List';
@@ -15,9 +15,13 @@ import MailIcon from '@mui/icons-material/Mail';
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import ImageList from '@mui/material/ImageList';
+import ImageListItem from '@mui/material/ImageListItem';
 import "./App.css"
+import { Grid2 } from '@mui/material';
 
 const drawerWidth = 240;
+const appBarHeight = 64;
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -54,6 +58,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
+
+const ImageGridItem = styled('div')(({}) => ({
+  margin: "5px",
+  height: "300px",
+  width: "300px",
+  objectFit: "cover"
+}))
+
+
 export default function FotoSoppi() {
   return (
     <Box sx={{ display: 'flex' }}>
@@ -69,7 +82,7 @@ export default function FotoSoppi() {
         <Toolbar
           sx={{
             px: 0, 
-            height: 64, 
+            height: appBarHeight, 
             display: 'flex',
             alignItems: 'center',
             [`@media (min-width: 600px)`]: {
@@ -119,8 +132,41 @@ export default function FotoSoppi() {
       </Drawer>
       <Box
         component="main"
-        sx={{ flexGrow: 1, bgcolor: '#303030', p: 3, height: "100vh" }}
+        sx={{
+          flexGrow: 1, 
+          bgcolor: '#303030',
+          marginTop: `${appBarHeight}px`,
+          padding: "1rem"}}
       >
+        <Grid2 container>
+          <ImageGridItem>
+            <img src='https://images.unsplash.com/photo-1551963831-b3b1ca40c98e' width={"100%"} height={"100%"}></img>
+          </ImageGridItem>
+          <ImageGridItem>
+            <img src='https://images.unsplash.com/photo-1551782450-a2132b4ba21d' width={"100%"} height={"100%"}></img>
+          </ImageGridItem>
+          <ImageGridItem>
+            <img src='https://images.unsplash.com/photo-1522770179533-24471fcdba45' width={"100%"} height={"100%"}></img>
+          </ImageGridItem>
+          <ImageGridItem>
+            <img src='https://images.unsplash.com/photo-1522770179533-24471fcdba45' width={"100%"} height={"100%"}></img>
+          </ImageGridItem>
+          <ImageGridItem>
+            <img src='https://images.unsplash.com/photo-1522770179533-24471fcdba45' width={"100%"} height={"100%"}></img>
+          </ImageGridItem>
+          <ImageGridItem>
+            <img src='https://images.unsplash.com/photo-1522770179533-24471fcdba45' width={"100%"} height={"100%"}></img>
+          </ImageGridItem>
+          <ImageGridItem>
+            <img src='https://images.unsplash.com/photo-1522770179533-24471fcdba45' width={"100%"} height={"100%"}></img>
+          </ImageGridItem>
+          <ImageGridItem>
+            <img src='https://images.unsplash.com/photo-1522770179533-24471fcdba45' width={"100%"} height={"100%"}></img>
+          </ImageGridItem>
+          <ImageGridItem>
+            <img src='https://images.unsplash.com/photo-1522770179533-24471fcdba45' width={"100%"} height={"100%"}></img>
+          </ImageGridItem>
+        </Grid2>
       </Box>
     </Box>
   );
