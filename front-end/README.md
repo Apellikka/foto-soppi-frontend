@@ -1,1 +1,2 @@
-A photo viewing app front-end done with React.
+Foto-Soppi front-end done with React.
+
