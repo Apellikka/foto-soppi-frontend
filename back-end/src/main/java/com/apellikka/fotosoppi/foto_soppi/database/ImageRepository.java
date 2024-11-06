@@ -1,4 +1,4 @@
-package com.apellikka.fotosoppi.foto_soppi;
+package com.apellikka.fotosoppi.foto_soppi.database;
 
 import org.springframework.data.repository.PagingAndSortingRepository;
 
