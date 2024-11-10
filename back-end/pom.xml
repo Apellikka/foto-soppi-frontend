@@ -12,7 +12,7 @@
 	<artifactId>foto-soppi</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>foto-soppi</name>
-	<description>Demo project for Spring Boot</description>
+	<description>An app for retrieving images</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -43,6 +43,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+    		<artifactId>postgresql</artifactId>
 		</dependency>
 	</dependencies>
 

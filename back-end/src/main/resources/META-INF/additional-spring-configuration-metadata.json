@@ -1,0 +1,5 @@
+{"properties": [{
+  "name": "image.base-directory",
+  "type": "java.lang.String",
+  "description": "Images base directory path'"
+}]}

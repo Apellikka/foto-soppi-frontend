@@ -139,31 +139,16 @@ export default function FotoSoppi() {
       >
         <Grid2 container>
           <ImageGridItem>
-            <img src='https://images.unsplash.com/photo-1551963831-b3b1ca40c98e' width={"100%"} height={"100%"}></img>
+            <img src='http://localhost:8080/images/1' width={"100%"} height={"100%"}></img>
           </ImageGridItem>
           <ImageGridItem>
-            <img src='https://images.unsplash.com/photo-1551782450-a2132b4ba21d' width={"100%"} height={"100%"}></img>
+            <img src='http://localhost:8080/images/2' width={"100%"} height={"100%"}></img>
           </ImageGridItem>
           <ImageGridItem>
-            <img src='https://images.unsplash.com/photo-1522770179533-24471fcdba45' width={"100%"} height={"100%"}></img>
+            <img src='http://localhost:8080/images/3' width={"100%"} height={"100%"}></img>
           </ImageGridItem>
           <ImageGridItem>
-            <img src='https://images.unsplash.com/photo-1522770179533-24471fcdba45' width={"100%"} height={"100%"}></img>
-          </ImageGridItem>
-          <ImageGridItem>
-            <img src='https://images.unsplash.com/photo-1522770179533-24471fcdba45' width={"100%"} height={"100%"}></img>
-          </ImageGridItem>
-          <ImageGridItem>
-            <img src='https://images.unsplash.com/photo-1522770179533-24471fcdba45' width={"100%"} height={"100%"}></img>
-          </ImageGridItem>
-          <ImageGridItem>
-            <img src='https://images.unsplash.com/photo-1522770179533-24471fcdba45' width={"100%"} height={"100%"}></img>
-          </ImageGridItem>
-          <ImageGridItem>
-            <img src='https://images.unsplash.com/photo-1522770179533-24471fcdba45' width={"100%"} height={"100%"}></img>
-          </ImageGridItem>
-          <ImageGridItem>
-            <img src='https://images.unsplash.com/photo-1522770179533-24471fcdba45' width={"100%"} height={"100%"}></img>
+            <img src='http://localhost:8080/images/4' width={"100%"} height={"100%"}></img>
           </ImageGridItem>
         </Grid2>
       </Box>
