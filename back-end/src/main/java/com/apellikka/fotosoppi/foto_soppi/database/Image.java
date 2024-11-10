@@ -15,7 +15,7 @@ public class Image {
     private Integer id;
     private String path;
 
-    private Image() {}
+    public Image() {}
 
     public Image(Integer id, String path) 
     {
