@@ -148,7 +148,7 @@ export default function FotoSoppi() {
             <img src='http://localhost:8080/images/3' width={"100%"} height={"100%"}></img>
           </ImageGridItem>
           <ImageGridItem>
-            <img src='http://localhost:8080/images/4' width={"100%"} height={"100%"}></img>
+            <img src='http://localhost:8080/images/8' width={"100%"} height={"100%"}></img>
           </ImageGridItem>
         </Grid2>
       </Box>
