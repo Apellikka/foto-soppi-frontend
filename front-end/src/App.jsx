@@ -139,16 +139,16 @@ export default function FotoSoppi() {
       >
         <Grid2 container>
           <ImageGridItem>
-            <img src='http://localhost:8080/images/1' width={"100%"} height={"100%"}></img>
+            <img src='http://localhost:8080/images/1/raw' width={"100%"} height={"100%"}></img>
           </ImageGridItem>
           <ImageGridItem>
-            <img src='http://localhost:8080/images/2' width={"100%"} height={"100%"}></img>
+            <img src='http://localhost:8080/images/2/raw' width={"100%"} height={"100%"}></img>
           </ImageGridItem>
           <ImageGridItem>
-            <img src='http://localhost:8080/images/3' width={"100%"} height={"100%"}></img>
+            <img src='http://localhost:8080/images/3/raw' width={"100%"} height={"100%"}></img>
           </ImageGridItem>
           <ImageGridItem>
-            <img src='http://localhost:8080/images/8' width={"100%"} height={"100%"}></img>
+            <img src='http://localhost:8080/images/8/raw' width={"100%"} height={"100%"}></img>
           </ImageGridItem>
         </Grid2>
       </Box>
