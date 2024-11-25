@@ -1,4 +1,4 @@
-package com.apellikka.fotosoppi.foto_soppi.database;
+package com.apellikka.fotosoppi.foto_soppi.database.entity;
 
 import org.springframework.hateoas.RepresentationModel;
 

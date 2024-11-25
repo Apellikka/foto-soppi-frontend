@@ -1,7 +1,11 @@
-package com.apellikka.fotosoppi.foto_soppi.database;
+package com.apellikka.fotosoppi.foto_soppi.database.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.apellikka.fotosoppi.foto_soppi.database.entity.Image;
+import com.apellikka.fotosoppi.foto_soppi.database.repository.ImageRepository;
+
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
