@@ -1,4 +1,5 @@
 import * as React from 'react';
+import {useState, useEffect, useRef} from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
@@ -41,7 +42,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
   pointerEvents: 'none',
   display: 'flex',
   alignItems: 'center',
-  justifyContent: 'center',
+  justifyContent: 'center'
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
@@ -57,18 +58,102 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-
 const ImageGridItem = styled('div')(({}) => ({
   margin: "5px",
   height: "300px",
   width: "300px",
-  objectFit: "cover"
+  objectFit: "cover",
+  
+  '& img': {
+    objectFit: "cover",
+    width: "100%",
+    height: "100%",
+    margin: "5px",
+  }
 }))
 
-
 export default function FotoSoppi() {
+  const [page, setPage] = useState(0);
+  const [images, updateImages] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
+  const boxRef = useRef(0);
+
+  function getImages()
+  {
+    let apiUrl = `http://localhost:8080/images/all?page=${page}`;
+
+    fetch(apiUrl)
+    .then(res => res.json())
+    .then((data) => {
+      const fetchedImages = data._embedded.imageList;
+      if(page === 0) updateImages([]);
+      updateImages((images) => [...images, ...fetchedImages]);
+      setLoading(false);
+    })
+  }
+
+  useEffect(() => {
+    getImages();
+  }, [page])
+  
+  useEffect(() => {
+    const box = boxRef.current;
+    if (box) {
+      box.scrollTop = 0; // Resets scroll to top on page reload
+      box.addEventListener('scroll', debounce(handleScroll, 500));
+    }
+    return () => {
+      if (box) {
+        box.removeEventListener('scroll', debounce(handleScroll, 500));
+      }
+    };
+  }, []);
+
+  
+  const handleScroll = () => {
+    const box = boxRef.current;
+    if(!box) return;
+    const isAtBottom = box.scrollHeight - box.scrollTop === box.clientHeight;
+    if(isAtBottom && !loading) 
+    {
+      setLoading(true);
+    }
+  };
+
+  function debounce(func, delay) {
+    let timeoutId;
+    return function (...args) {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+      timeoutId = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  }
+
+  useEffect(() => {
+    if(loading)
+    {
+      setPage((prevPage) => prevPage+1);
+    }
+  }, [loading]);
+
+  // Update window height when resizing
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowHeight(window.innerHeight);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box sx={{ display: 'flex'}}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -131,25 +216,25 @@ export default function FotoSoppi() {
       </Drawer>
       <Box
         component="main"
+        ref={boxRef}
         sx={{
           flexGrow: 1, 
           bgcolor: '#303030',
           marginTop: `${appBarHeight}px`,
-          padding: "1rem"}}
+          padding: "1rem",
+          height: `calc(${windowHeight}px - ${appBarHeight}px)`,
+          overflowY: "auto"}}
       >
-        <Grid2 container>
-          <ImageGridItem>
-            <img src='http://localhost:8080/images/1/raw' width={"100%"} height={"100%"}></img>
-          </ImageGridItem>
-          <ImageGridItem>
-            <img src='http://localhost:8080/images/2/raw' width={"100%"} height={"100%"}></img>
-          </ImageGridItem>
-          <ImageGridItem>
-            <img src='http://localhost:8080/images/3/raw' width={"100%"} height={"100%"}></img>
-          </ImageGridItem>
-          <ImageGridItem>
-            <img src='http://localhost:8080/images/8/raw' width={"100%"} height={"100%"}></img>
-          </ImageGridItem>
+        <Grid2 
+        container>
+          {images.length > 1
+          && images.map((item) => {
+            return (
+              <ImageGridItem>
+                <img src={item._links.image.href} height={"100%"}></img>
+               </ImageGridItem>
+            )
+          })}
         </Grid2>
       </Box>
     </Box>
