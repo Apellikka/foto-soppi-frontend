@@ -1,19 +1,24 @@
-package com.apellikka.fotosoppi.foto_soppi.database;
+package com.apellikka.fotosoppi.foto_soppi.database.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+
+import com.apellikka.fotosoppi.foto_soppi.database.entity.Image;
+import com.apellikka.fotosoppi.foto_soppi.database.repository.ImageRepository;
+
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.hateoas.CollectionModel;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
@@ -23,13 +28,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 
 
 
 @RestController
-@RequestMapping(("/images"))
+@RequestMapping("/images")
 public class ImageController {
 
     private final ImageRepository imageRepository;
@@ -68,18 +74,26 @@ public class ImageController {
         .body(resource);
     }
 
+
     @GetMapping("/all")
-    public CollectionModel<EntityModel<Image>> findAllImages()
+    public HttpEntity<PagedModel<EntityModel<Image>>> findAllImages(
+        Pageable pageable, 
+        PagedResourcesAssembler<Image> assembler)
     {
-        List<EntityModel<Image>> images = imageRepository.findAll().stream()
-        .map(image -> EntityModel.of(image,
-            linkTo(methodOn(ImageController.class).getImageById(image.getId())).withSelfRel(),
-            linkTo(methodOn(ImageController.class).findAllImages()).withRel("images")))
-        .collect(Collectors.toList());
+        Page<Image> images = imageRepository.findAll(pageable);
+        images.forEach(image -> {
+            image.add(linkTo(methodOn(ImageController.class).getImageById(image.getId())).withSelfRel());
+            image.add(linkTo(methodOn(ImageController.class).serveImage(image.getId())).withRel("image"));
+        }
+        );
+        PagedModel<EntityModel<Image>> pagedModel = assembler.toModel(images);
+        
+        return ResponseEntity.ok(pagedModel);
+    }
 
-        return CollectionModel.of(images, linkTo(methodOn(ImageController.class).findAllImages()).withSelfRel());
-    }    
-
+    
+    
+    // Utils
     private Resource getResourceFromPath(Path imagePath) {
         try {
             Resource resource = new UrlResource(imagePath.toUri());
