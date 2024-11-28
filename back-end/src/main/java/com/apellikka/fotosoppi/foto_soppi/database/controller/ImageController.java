@@ -35,7 +35,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 
 
 @RestController
-@RequestMapping(("/images"))
+@RequestMapping("/images")
 public class ImageController {
 
     private final ImageRepository imageRepository;
@@ -74,14 +74,17 @@ public class ImageController {
         .body(resource);
     }
 
+
     @GetMapping("/all")
     public HttpEntity<PagedModel<EntityModel<Image>>> findAllImages(
         Pageable pageable, 
         PagedResourcesAssembler<Image> assembler)
     {
         Page<Image> images = imageRepository.findAll(pageable);
-        images.forEach(i -> 
-            i.add(linkTo(methodOn(ImageController.class).getImageById(i.getId())).withSelfRel())
+        images.forEach(image -> {
+            image.add(linkTo(methodOn(ImageController.class).getImageById(image.getId())).withSelfRel());
+            image.add(linkTo(methodOn(ImageController.class).serveImage(image.getId())).withRel("image"));
+        }
         );
         PagedModel<EntityModel<Image>> pagedModel = assembler.toModel(images);
         
