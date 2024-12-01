@@ -81,13 +81,19 @@ export default function FotoSoppi() {
 
   function getImages()
   {
-    let apiUrl = `http://localhost:8080/images/all?page=${page}`;
+    const apiUrl = `http://localhost:8080/images/all?page=${page}`;
 
     fetch(apiUrl)
     .then(res => res.json())
     .then((data) => {
+      if(!data._embedded || !data._embedded.imageList)
+      {
+        console.warn("No more images found in response.");
+        setLoading(false);
+        return;
+      }
       const fetchedImages = data._embedded.imageList;
-      if(page === 0) updateImages([]);
+      if(page === 0) updateImages([]); // If page is reloaded we want to reset the array so there'll be no duplicates
       updateImages((images) => [...images, ...fetchedImages]);
       setLoading(false);
     })
@@ -232,7 +238,7 @@ export default function FotoSoppi() {
             return (
               <ImageGridItem>
                 <img src={item._links.image.href} height={"100%"}></img>
-               </ImageGridItem>
+              </ImageGridItem>
             )
           })}
         </Grid2>
