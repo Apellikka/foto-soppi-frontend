@@ -1,15 +1,16 @@
-package com.apellikka.fotosoppi.foto_soppi.database.controller;
+package com.apellikka.fotosoppi.foto_soppi.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.apellikka.fotosoppi.foto_soppi.database.entity.Image;
-import com.apellikka.fotosoppi.foto_soppi.database.repository.ImageRepository;
+import com.apellikka.fotosoppi.foto_soppi.entity.Image;
+import com.apellikka.fotosoppi.foto_soppi.repository.ImageRepository;
 
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
@@ -77,7 +78,7 @@ public class ImageController {
 
     @GetMapping("/all")
     public HttpEntity<PagedModel<EntityModel<Image>>> findAllImages(
-        Pageable pageable, 
+        @PageableDefault(page=0, size=10) Pageable pageable, 
         PagedResourcesAssembler<Image> assembler)
     {
         Page<Image> images = imageRepository.findAll(pageable);
