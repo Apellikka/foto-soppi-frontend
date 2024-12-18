@@ -1,4 +1,4 @@
-package com.apellikka.fotosoppi.service;
+package com.apellikka.fotosoppi.foto_soppi.service;
 
 import java.util.Optional;
 

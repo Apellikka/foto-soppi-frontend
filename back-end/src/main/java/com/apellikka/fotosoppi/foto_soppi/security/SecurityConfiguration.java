@@ -9,7 +9,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import com.apellikka.fotosoppi.service.CustomUserDetailsService;
+
+import com.apellikka.fotosoppi.foto_soppi.service.CustomUserDetailsService;
 
 @Configuration
 @EnableWebSecurity
