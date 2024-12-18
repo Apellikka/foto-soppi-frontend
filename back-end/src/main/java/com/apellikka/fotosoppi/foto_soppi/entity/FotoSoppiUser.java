@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class FotoSoppiUser implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,6 +23,14 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String email;
+
+    private FotoSoppiUser() {};
+
+    public FotoSoppiUser(String username, String password, String email) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
