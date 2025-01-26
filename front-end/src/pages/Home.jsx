@@ -13,15 +13,14 @@ import ListItemText from '@mui/material/ListItemText';
 import PhotoAlbumIcon from '@mui/icons-material/PhotoAlbum';
 import FolderIcon from '@mui/icons-material/Folder';
 import FavoriteIcon from '@mui/icons-material/Favorite'
-import SearchComponent from '../SearchComponent';
-import { Grid2 } from '@mui/material';
-import { ImageCard } from '../ImageCard';
+import SearchComponent from './components/SearchComponent';
 import {getImages, setLoadingIfScrollAtBottom, debounce} from '../AppUtils'
+import { GalleryComponent } from './components/GalleryComponent';
 
 const drawerWidth = 240;
 const appBarHeight = 64;
 
-export default function FotoSoppi() {
+export default function Home() {
     const [page, setPage] = useState(0);
     const [images, updateImages] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -64,6 +63,7 @@ export default function FotoSoppi() {
             window.removeEventListener('resize', handleResize);
         };
     }, []);
+
     return(
         <Box sx={{ display: 'flex' }}>
         <CssBaseline />
@@ -122,30 +122,12 @@ export default function FotoSoppi() {
           </List>
   
         </Drawer>
-  
-        <Box
-          component="main"
-          ref={boxRef}
-          sx={{
-            flexGrow: 1,
-            bgcolor: '#303030',
-            marginTop: `${appBarHeight}px`,
-            padding: "1rem",
-            height: `calc(${windowHeight}px - ${appBarHeight}px)`,
-            overflowY: "auto"
-          }}>
-  
-          <Grid2 container>
-            {
-              images.length > 0 &&
-              images.map((item) => {
-                return (<ImageCard src={item._links.image.href} />)
-              })
-            }
-          </Grid2>
-  
-        </Box>
-  
+        <GalleryComponent 
+          boxRef={ boxRef }
+          appBarHeight={ appBarHeight } 
+          windowHeight={ windowHeight } 
+          images={ images }>
+        </GalleryComponent>  
       </Box>
     )
 }
