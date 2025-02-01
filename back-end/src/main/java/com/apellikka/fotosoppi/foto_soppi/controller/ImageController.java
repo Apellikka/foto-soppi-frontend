@@ -41,6 +41,9 @@ public class ImageController {
 
     private final ImageRepository imageRepository;
 
+    @Value("${spring.profiles.active}")
+    private String activeProfile;
+
     @Value("${image.base.url}")
     private String baseDirectory;
 
@@ -65,14 +68,27 @@ public class ImageController {
         Image image = imageRepository.findById(id).orElseThrow(() -> 
                 new ResponseStatusException(HttpStatus.NOT_FOUND, "Image ID not found from database!"));
     
-        Path imagePath = Paths.get(baseDirectory, image.getPath());
-        Resource resource = getResourceFromPath(imagePath);
-        String contentType = getContentType(imagePath);
-    
-        return ResponseEntity
-        .ok()
-        .contentType(MediaType.parseMediaType(contentType))
-        .body(resource);
+        if(activeProfile.equals("dev")) {
+            Path imagePath = Paths.get(baseDirectory + image.getPath());
+            Resource resource = getResourceFromPath(imagePath);
+            String contentType = getContentType(imagePath);
+
+            return ResponseEntity
+                .ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .body(resource);
+        }
+        
+        // For production environment
+        else {
+            String imagePath = baseDirectory + image.getPath();
+            Resource resource = getResourceFromPath(imagePath);
+            
+            return ResponseEntity
+                .ok()
+                .contentType(MediaType.parseMediaType("application/octet-stream"))
+                .body(resource);
+        }
     }
 
 
@@ -95,6 +111,21 @@ public class ImageController {
     
     
     // Utils
+
+    // For production
+    private Resource getResourceFromPath(String imagePath) {
+        try {
+            Resource resource = new UrlResource(imagePath);
+            if (!resource.exists()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Image file not found!");
+            }
+            return resource;
+        } catch (MalformedURLException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Malformed URL for image resource", e);
+        }
+    }
+
+    // For development
     private Resource getResourceFromPath(Path imagePath) {
         try {
             Resource resource = new UrlResource(imagePath.toUri());
@@ -106,7 +137,7 @@ public class ImageController {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Malformed URL for image resource", e);
         }
     }
-
+    // For development
     private String getContentType(Path imagePath) {
         try {
             String contentType = Files.probeContentType(imagePath);

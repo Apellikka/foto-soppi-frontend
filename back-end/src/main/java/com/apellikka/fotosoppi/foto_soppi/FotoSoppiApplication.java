@@ -18,7 +18,7 @@ public class FotoSoppiApplication {
 			return new WebMvcConfigurer() {
 			@Override
 			public void addCorsMappings(@SuppressWarnings("null") CorsRegistry registry) {
-				registry.addMapping("/images/*")
+				registry.addMapping("/images/**")
 					.allowedOrigins("http://localhost:5173")
 					.allowedMethods("GET", "OPTIONS");
 			}
