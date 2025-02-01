@@ -7,7 +7,7 @@ const Search = styled('div')(({ theme }) => ({
   position: 'relative',
   backgroundColor: alpha(theme.palette.common.white, 0.15),
   '&:hover': {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
   },
   width: '100%',
   height: '100%',
@@ -48,6 +48,7 @@ export const SearchComponent = () => {
       <StyledInputBase
         placeholder="Search…"
         inputProps={{ 'aria-label': 'search' }}
+        disabled={true}
       />
     </Search>
   );

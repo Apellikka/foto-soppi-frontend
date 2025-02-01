@@ -111,7 +111,7 @@ export default function Home() {
           <List sx={{ color: "#E0E0E0" }}>
             {['All', 'Folders', 'Favorites'].map((text, index) => (
               <ListItem key={text} disablePadding>
-                <ListItemButton sx={{ ":hover": { bgcolor: "#303030" } }}>
+                <ListItemButton sx={{ ":hover": { bgcolor: "#303030" }}} disabled={true}>
                   <ListItemIcon sx={{ color: "#E0E0E0" }}>
                     {index === 0 ? <PhotoAlbumIcon /> : index === 1 ? <FolderIcon /> : <FavoriteIcon />}
                   </ListItemIcon>
