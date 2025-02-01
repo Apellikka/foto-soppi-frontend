@@ -41,7 +41,7 @@ public class ImageController {
 
     private final ImageRepository imageRepository;
 
-    @Value("${image.base-directory}")
+    @Value("${image.base.url}")
     private String baseDirectory;
 
     public ImageController(ImageRepository imageRepository) 
