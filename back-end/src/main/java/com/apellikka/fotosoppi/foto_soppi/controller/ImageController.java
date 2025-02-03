@@ -94,7 +94,7 @@ public class ImageController {
 
     @GetMapping("/all")
     public HttpEntity<PagedModel<EntityModel<Image>>> findAllImages(
-        @PageableDefault(page=0, size=10) Pageable pageable, 
+        @PageableDefault(page=0, size=20) Pageable pageable, 
         PagedResourcesAssembler<Image> assembler)
     {
         Page<Image> images = imageRepository.findAll(pageable);
