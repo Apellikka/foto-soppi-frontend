@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>com.apellikka.fotosoppi</groupId>
 	<artifactId>foto-soppi</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.1</version>
 	<name>foto-soppi</name>
 	<description>An app for retrieving images</description>
 	<url/>
