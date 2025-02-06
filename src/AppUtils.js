@@ -1,5 +1,5 @@
 const getImages = async (page, setLoading, updateImages) => {
-    const apiUrl = `http://localhost:8080/images/all?page=${page}`;
+    const apiUrl = `https://foto-soppi-731ee922966d.herokuapp.com/images/all?page=${page}`;
 
     try {
         const response = await fetch(apiUrl);
