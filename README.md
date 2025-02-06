@@ -2,7 +2,7 @@
 
 https://apellikka.github.io/foto-soppi-frontend/ 
 
-**Note: Infinite scroll may not work with large screens for now.** 
+**Note: Infinite scroll may not work with large screens for now and all buttons are disabled due to development in progress.** 
 
 Foto-Soppi is a React.js and Java Spring Boot image gallery application. Images are loaded automatically as the user scrolls down until there are no more pictures left to load from the remote resource. Utilizes the MVC-architectural pattern.
 
