@@ -1,5 +1,7 @@
+const API_URL = import.meta.env.VITE_API_URL;
+
 const getImages = async (page, setLoading, updateImages) => {
-    const apiUrl = `https://foto-soppi-731ee922966d.herokuapp.com/images/all?page=${page}`;
+    const apiUrl = API_URL + `${page}`;
 
     try {
         const response = await fetch(apiUrl);
