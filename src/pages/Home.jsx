@@ -14,11 +14,11 @@ import PhotoAlbumIcon from '@mui/icons-material/PhotoAlbum';
 import FolderIcon from '@mui/icons-material/Folder';
 import FavoriteIcon from '@mui/icons-material/Favorite'
 import SearchComponent from './components/SearchComponent';
-import {getImages, setLoadingIfScrollAtBottom, debounce} from '../AppUtils'
 import { GalleryComponent } from './components/GalleryComponent';
 
 const drawerWidth = 240;
 const appBarHeight = 64;
+const API_URL = import.meta.env.VITE_API_URL;
 
 export default function Home() {
     const [page, setPage] = useState(0);
@@ -131,3 +131,52 @@ export default function Home() {
       </Box>
     )
 }
+
+const getImages = async (page, setLoading, updateImages) => {
+    const apiUrl = API_URL + `${page}`;
+
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        if (!data._embedded || !data._embedded.imageList) {
+            console.warn("No more images found in response.");
+            setLoading(false);
+            return;
+        }
+
+        const fetchedImages = data._embedded.imageList;
+        if (page === 0) updateImages([]); // Reset the array if reloading the first page
+        updateImages((images) => [...images, ...fetchedImages]);
+        setLoading(false);
+    }
+    catch (error) {
+        console.error("Error fetching images:", error);
+        setLoading(false);
+    }
+};
+
+const setLoadingIfScrollAtBottom = (boxRef, loading, setLoading) => {
+    const box = boxRef.current;
+    if (!box) return;
+
+    const isAtBottom = box.scrollHeight - box.scrollTop === box.clientHeight;
+
+    if (isAtBottom && !loading) {
+        setLoading(true);
+    }
+};
+
+const debounce = (func, delay) => {
+    let timeoutId;
+    return function (...args) {
+        if (timeoutId) {
+            clearTimeout(timeoutId);
+        }
+        timeoutId = setTimeout(() => {
+            func(...args);
+        }, delay);
+    };
+}
+
+
