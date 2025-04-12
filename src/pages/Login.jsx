@@ -1,8 +1,15 @@
 import React from 'react';
 import { TextField, Button, Box, Typography, Icon } from '@mui/material';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
+  
+    const navigate = useNavigate();
+    const navigateToRegister = () => {
+      navigate('/register');
+    }
+  
   return (
     <Box sx={{
       bgcolor: "#181818",
@@ -79,10 +86,24 @@ export default function Login() {
             />
           </Box>
 
-          <Button type="submit" variant="contained" color='primary'>
+          <Button type="submit" variant="contained" color='primary' 
+            sx={{
+              marginTop: '1rem',
+              width: '100px',
+              }}>
             Sign In
           </Button>
+
+          <Typography variant="h8" color="#E0E0E0" sx={{ marginTop: '0.5rem' }} fontFamily={'Roboto'}>
+            No account? Sign up! 
+          </Typography>
           
+          <Button type="button" variant="contained" color='primary' onClick={() => navigateToRegister()} 
+            sx={{ 
+              marginTop: '0.2rem',
+              width: '100px',}}>
+            Sign Up
+          </Button>
         </Box>
       </form>
     </Box>
