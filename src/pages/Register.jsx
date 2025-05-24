@@ -1,8 +1,34 @@
 import React from 'react';
 import { TextField, Button, Box, Typography, Icon } from '@mui/material';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import {useState} from 'react';
 
 export default function Register() {
+
+  const [form, setForm] = useState({
+      username: '',
+      password: ''
+    });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setForm((prevForm) => ({
+      ...prevForm,
+      [name]: value
+    }));
+  };
+
+  function handleSubmit(event) {
+    event.preventDefault(); 
+    console.log('username:', form.username);
+    console.log('password:', form.password);
+    
+    setForm({
+      username: '',
+      password: ''
+    });
+  }
+
   return (
     <Box sx={{
       bgcolor: "#181818",
@@ -12,7 +38,7 @@ export default function Register() {
       minHeight: '100vh',
     }}>
       
-      <form>
+      <form onSubmit={handleSubmit}>
         <Box sx={{
           bgcolor: '#303030',
           display: 'flex',
@@ -50,9 +76,12 @@ export default function Register() {
                 borderRadius: '16px',
               },
             }}
+              name="username"
               label="Username"
               variant="outlined"
               type="username"
+              value={form.username}
+              onChange={handleChange}
               fullWidth
             />
           </Box>
@@ -72,9 +101,12 @@ export default function Register() {
                 borderRadius: '16px', 
               },
             }}
+              name="password"
               label="Password"
               variant="outlined"
               type="password"
+              value={form.password}
+              onChange={handleChange}
               fullWidth
             />
           </Box>
