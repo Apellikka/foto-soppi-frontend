@@ -2,6 +2,8 @@ import { TextField, Button, Box, Typography, Icon } from '@mui/material';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { useState } from 'react';
 
+const REGISTER_API_URL = import.meta.env.VITE_API_URL_REGISTER;
+
 export default function Register() {
 
   const [form, setForm] = useState({
@@ -23,14 +25,13 @@ export default function Register() {
     console.log('password:', form.password);
     
     // Here send the form data to backend API for registration
-    fetch('/api/register', {
+    fetch(REGISTER_API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(form)
     })
-    console.log("FORM: ", form);
     setForm({
       username: '',
       password: ''
