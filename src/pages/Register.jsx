@@ -1,7 +1,6 @@
-import React from 'react';
 import { TextField, Button, Box, Typography, Icon } from '@mui/material';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
-import {useState} from 'react';
+import { useState } from 'react';
 
 export default function Register() {
 
@@ -23,6 +22,15 @@ export default function Register() {
     console.log('username:', form.username);
     console.log('password:', form.password);
     
+    // Here send the form data to backend API for registration
+    fetch('/api/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(form)
+    })
+    console.log("FORM: ", form);
     setForm({
       username: '',
       password: ''
