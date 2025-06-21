@@ -1,7 +1,9 @@
-import React from 'react';
 import { TextField, Button, Box, Typography, Icon } from '@mui/material';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+
+const LOGIN_API_URL = import.meta.env.VITE_API_URL_LOGIN;
 
 export default function Login() {
   
@@ -9,6 +11,39 @@ export default function Login() {
     const navigateToRegister = () => {
       navigate('/register');
     }
+
+    const [form, setForm] = useState({
+      username: '',
+      password: ''
+    });
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setForm((prevForm) => ({
+      ...prevForm,
+      [name]: value
+    }));
+  };
+
+  function handleSubmit(event) {
+    event.preventDefault(); 
+    console.log('username:', form.username);
+    console.log('password:', form.password);
+    // TODO: Validate form data here 
+    
+    // Here send the form data to backend API for registration
+    fetch(LOGIN_API_URL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(form)
+    })
+    setForm({
+      username: '',
+      password: ''
+    });
+  }
   
   return (
     <Box sx={{
@@ -19,7 +54,7 @@ export default function Login() {
       minHeight: '100vh',
     }}>
       
-      <form>
+      <form onSubmit={handleSubmit}>
         <Box sx={{
           bgcolor: '#303030',
           display: 'flex',
@@ -61,6 +96,9 @@ export default function Login() {
               variant="outlined"
               type="username"
               fullWidth
+              value={form.username}
+              onChange={handleChange}
+              name="username"
             />
           </Box>
 
@@ -83,6 +121,9 @@ export default function Login() {
               variant="outlined"
               type="password"
               fullWidth
+              value={form.password}
+              onChange={handleChange}
+              name="password"
             />
           </Box>
 

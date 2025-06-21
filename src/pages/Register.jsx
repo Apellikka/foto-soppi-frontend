@@ -10,7 +10,7 @@ export default function Register() {
       username: '',
       password: ''
     });
-
+    
   const handleChange = (event) => {
     const { name, value } = event.target;
     setForm((prevForm) => ({
@@ -23,6 +23,7 @@ export default function Register() {
     event.preventDefault(); 
     console.log('username:', form.username);
     console.log('password:', form.password);
+    // TODO: Validate form data here 
     
     // Here send the form data to backend API for registration
     fetch(REGISTER_API_URL, {
