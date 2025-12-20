@@ -1,10 +1,19 @@
 import { TextField, Button, Box, Typography, Icon } from '@mui/material';
 import PhotoCamera from '@mui/icons-material/PhotoCamera';
+import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 const REGISTER_API_URL = import.meta.env.VITE_API_URL_REGISTER;
 
 export default function Register() {
+
+  const [invalidRegister, setInvalidRegister] = useState(false);
+  const [registerErrorMessage, setRegisterErrorMessage] = useState('');
+
+  const navigate = useNavigate();
+  const navigateToLogin = () => {
+    navigate('/login');
+  }
 
   const [form, setForm] = useState({
       username: '',
@@ -19,24 +28,39 @@ export default function Register() {
     }));
   };
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault(); 
     console.log('username:', form.username);
     console.log('password:', form.password);
     // TODO: Validate form data here 
     
     // Here send the form data to backend API for registration
-    fetch(REGISTER_API_URL, {
+    const response = await fetch(REGISTER_API_URL, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(form)
-    })
-    setForm({
-      username: '',
-      password: ''
     });
+
+    const body = await response.json();
+
+    if (response.status === 201) {
+      setForm({
+        username: '',
+        password: ''
+      });
+      setInvalidRegister(false);
+      navigateToLogin();
+    }
+    else if (response.status === 409) {
+      setInvalidRegister(true);
+      setRegisterErrorMessage('Username already exists. Please choose a different one.');
+    }
+    else {
+      setInvalidRegister(true);
+      setRegisterErrorMessage('Registration failed. Please try again later.\n' + 'Status code ' + response.status + ': ' + body.message);
+    }
   }
 
   return (
@@ -58,7 +82,8 @@ export default function Register() {
           justifyContent: 'center',
           alignItems: 'center',
           borderRadius: '16px',
-          padding: '2rem'
+          padding: '2rem',
+          props: { invalidRegister }
         }}>
 
           <Typography variant="h4" color="#E0E0E0" sx={{ marginBottom: '2rem' }} fontFamily={'Roboto'}>
@@ -121,7 +146,13 @@ export default function Register() {
             />
           </Box>
 
-          <Button type="submit" variant="contained" color='primary' 
+          {invalidRegister && (
+            <Typography variant="body2" color="red" sx={{ marginBottom: '1rem', width: '300px', textAlign: 'center' }}>
+              {registerErrorMessage}
+            </Typography>
+          )}
+
+          <Button type="submit" variant="contained" color='primary'
             sx={{ 
               marginTop: '0.2rem',
               width: '100px',}}>
