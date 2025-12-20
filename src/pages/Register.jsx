@@ -29,12 +29,18 @@ export default function Register() {
   };
 
   async function handleSubmit(event) {
-    event.preventDefault(); 
-    console.log('username:', form.username);
-    console.log('password:', form.password);
-    // TODO: Validate form data here 
-    
-    // Here send the form data to backend API for registration
+    event.preventDefault();
+    if (form.username.trim().length < 3) {
+      setInvalidRegister(true);
+      setRegisterErrorMessage('Username must be over 3 characters.');
+      return;
+    }
+    if (form.password.trim().length < 8) {
+      setInvalidRegister(true);
+      setRegisterErrorMessage('Password must be over 8 characters.');
+      return;
+    }
+
     const response = await fetch(REGISTER_API_URL, {
       method: 'POST',
       headers: {
@@ -53,13 +59,17 @@ export default function Register() {
       setInvalidRegister(false);
       navigateToLogin();
     }
-    else if (response.status === 409) {
-      setInvalidRegister(true);
-      setRegisterErrorMessage('Username already exists. Please choose a different one.');
-    }
     else {
-      setInvalidRegister(true);
-      setRegisterErrorMessage('Registration failed. Please try again later.\n' + 'Status code ' + response.status + ': ' + body.message);
+      if (response.status === 409) {
+        setInvalidRegister(true);
+        setRegisterErrorMessage('Username already exists. Please choose a different one.');
+        throw new Error(body.message);
+      } 
+      else {
+        setInvalidRegister(true);
+        setRegisterErrorMessage('Registration failed. Please try again later.\n' + 'Status code ' + response.status + ': ' + body.message);
+        throw new Error(body.message);
+      }
     }
   }
 

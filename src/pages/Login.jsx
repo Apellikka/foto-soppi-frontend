@@ -27,11 +27,10 @@ export default function Login() {
 
   function handleSubmit(event) {
     event.preventDefault(); 
-    console.log('username:', form.username);
-    console.log('password:', form.password);
-    // TODO: Validate form data here 
-    
-    // Here send the form data to backend API for registration
+
+    // TODO: Handle errors and redirect on successful login.
+    // Handle JWT token from backend response.
+
     fetch(LOGIN_API_URL, {
       method: 'POST',
       headers: {
