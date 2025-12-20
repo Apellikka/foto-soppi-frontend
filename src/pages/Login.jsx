@@ -53,7 +53,7 @@ export default function Login() {
       minHeight: '100vh',
     }}>
       
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} autoComplete='off'>
         <Box sx={{
           bgcolor: '#303030',
           display: 'flex',
@@ -63,7 +63,7 @@ export default function Login() {
           justifyContent: 'center',
           alignItems: 'center',
           borderRadius: '16px',
-          padding: '2rem'
+          padding: '2rem',
         }}>
 
           <Typography variant="h4" color="#E0E0E0" sx={{ marginBottom: '2rem' }} fontFamily={'Roboto'}>

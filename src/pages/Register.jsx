@@ -82,7 +82,7 @@ export default function Register() {
       minHeight: '100vh',
     }}>
       
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} autoComplete='off'>
         <Box sx={{
           bgcolor: '#303030',
           display: 'flex',
